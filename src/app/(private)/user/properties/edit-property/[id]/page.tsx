@@ -1,6 +1,6 @@
 import PageTitle from "@/componets/page-title";
 import React from "react";
-import PropertiesForm from "../../_componets/properties-form/page";
+import PropertiesForm from "../../_componets/properties-form";
 
 function EditPropertyPage() {
   return (
