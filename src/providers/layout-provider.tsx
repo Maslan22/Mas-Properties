@@ -1,13 +1,48 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
 import { UserButton } from "@clerk/nextjs";
-import { message } from "antd";
+import { Button, Dropdown, message } from "antd";
 import { GetCurrentUserFromMongoDB } from "@/actions/user";
 import { User } from "@prisma/client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Loader from "@/componets/loader";
 
+const userMenu = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Properties",
+    path: "/user/properties",
+  },
+  {
+    name: "Account",
+    path: "/user/account",
+  },
+  {
+    name: "Subscriptions",
+    path: "/user/subscriptions",
+  },
+];
+const adminMenu = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Properties",
+    path: "/admin/properties",
+  },
+  {
+    name: "Users",
+    path: "/admin/users",
+  },
+];
+
 function LayoutProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const [menuToShow, setMenuToShow] = useState<any>(userMenu);
   const [currentUserData = null, setCurrentUserData] = useState<User | null>(
     null
   );
@@ -22,7 +57,18 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
           <h1 className="text-2xl text-white font-bold">MAS Properties</h1>
 
           <div className="bg-white py-2 px-5 rounded-sm flex items-center gap-5">
-            <span>{currentUserData?.username}</span>
+            <Dropdown
+              menu={{
+                items: menuToShow.map((item: any) => ({
+                  label: item.name,
+                  onClick: () => {
+                    router.push(item.path);
+                  },
+                })),
+              }}
+            >
+              <Button className="text-primary hover:text-primary" type="link">{currentUserData?.username}</Button>
+            </Dropdown>
             <UserButton afterSignOutUrl="/sign-in" />
           </div>
         </div>
@@ -33,11 +79,11 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     if (isPublicRoute) return children;
     // if (loading) return <Loader />;
     return (
-        <div>
-          <div className="py-5 lg:px-20 px-5">{children}</div>
-          {loading && <Loader />}
-        </div>
-      );
+      <div>
+        <div className="py-5 lg:px-20 px-5">{children}</div>
+        {loading && <Loader />}
+      </div>
+    );
   };
 
   const getCurrentUser = async () => {
@@ -46,6 +92,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       const response: any = await GetCurrentUserFromMongoDB();
       if (response.error) throw new Error(response.error.message);
       setCurrentUserData(response.data);
+      if (response.data.isAdmin) {
+        setMenuToShow(adminMenu);
+      }
     } catch (error: any) {
       message.error(error.message);
     } finally {
