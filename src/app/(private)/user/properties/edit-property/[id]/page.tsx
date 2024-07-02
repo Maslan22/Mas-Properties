@@ -1,9 +1,14 @@
-import React from 'react'
+import PageTitle from "@/componets/page-title";
+import React from "react";
+import PropertiesForm from "../../_componets/properties-form/page";
 
 function EditPropertyPage() {
   return (
-    <div>EditPropertyPage</div>
-  )
+    <div>
+      <PageTitle title="Edit Property" />
+      <PropertiesForm />
+    </div>
+  );
 }
 
-export default EditPropertyPage
+export default EditPropertyPage;

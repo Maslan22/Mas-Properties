@@ -1,9 +1,22 @@
-import React from 'react'
+import PageTitle from "@/componets/page-title";
+import React from "react";
+import PropertiesTable from "./_componets/properties-table";
+import LinkButton from "@/componets/link-button";
 
 function Properties() {
   return (
-    <div>Properties</div>
-  )
+    <div>
+      <div className="flex justify-between items-center">
+        <PageTitle title="Properties" />
+        <LinkButton
+          title="Create Property"
+          path="/user/properties/create-property"
+        />
+      </div>
+
+      <PropertiesTable />
+    </div>
+  );
 }
 
-export default Properties
+export default Properties;
