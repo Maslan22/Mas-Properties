@@ -20,12 +20,15 @@ function PropertiesForm() {
     basic: {},
     location: {},
     amenities: {},
-    media: {},
+    media: {
+      newlyUploadedFiles: [],
+      images: [],
+    },
     contact: {},
   });
   const [currentStep, setCurrentStep] = useState(0);
 
-  const commonPropsForSteps : PropertiesFormStepProps = {
+  const commonPropsForSteps: PropertiesFormStepProps = {
     currentStep,
     setCurrentStep,
     finalValues,
