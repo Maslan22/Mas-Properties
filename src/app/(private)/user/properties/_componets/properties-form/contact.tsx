@@ -2,6 +2,7 @@ import React from "react";
 import { PropertiesFormStepProps } from ".";
 import { Button, Form, Input, InputNumber, Select, message } from "antd";
 import { UploadFilesToFirebaseAndReturnUrls } from "@/helpers/upload-media";
+import { AddProperty } from "@/actions/properties";
 
 function Contact({
   currentStep,
@@ -13,9 +14,19 @@ function Contact({
     try {
       const tempFinalValues = { ...finalValues, contact: values };
       const tempMedia = tempFinalValues.media;
-      tempMedia.images = await UploadFilesToFirebaseAndReturnUrls(tempMedia.newlyUploadedFiles);
+      tempMedia.images = await UploadFilesToFirebaseAndReturnUrls(
+        tempMedia.newlyUploadedFiles
+      );
       tempFinalValues.media = tempMedia;
-      console.log(tempFinalValues);
+      const valuesAsPerDb = {
+        ...tempFinalValues.basic,
+        ...tempFinalValues.location,
+        ...tempFinalValues.details,
+        ...tempFinalValues.contact,
+        images: tempFinalValues.media.images,
+      };
+      await AddProperty(valuesAsPerDb);
+      message.success("Property added successfully");
     } catch (error: any) {
       message.error(error.message);
     }
@@ -43,11 +54,11 @@ function Contact({
           <Input placeholder="Owner Email" />
         </Form.Item>
         <Form.Item
-          name="ownerNumber"
-          label="Owner Number"
+          name="ownerPhone"
+          label="Owner Phone"
           rules={[{ required: true, message: "Please input Owner Number" }]}
         >
-          <Input placeholder="Owner Number" />
+          <Input placeholder="Owner Phone" />
         </Form.Item>
         <Form.Item
           name="showOwnerContact"

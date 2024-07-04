@@ -5,7 +5,7 @@ export const UploadFilesToFirebaseAndReturnUrls = async (files: []) => {
     const storage = getStorage(firebaseApp);
     const uploadedFilesResponses = await Promise.all(
       files.map((file: any) => {
-        const storageRef = ref(storage, `properties/${file.name}`);
+        const storageRef = ref(storage, `images/${file.name}`);
         return uploadBytes(storageRef, file);
       })
     );
