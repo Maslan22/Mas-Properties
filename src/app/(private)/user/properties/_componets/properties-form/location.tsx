@@ -15,7 +15,7 @@ function Location({
   };
   //city, pincode, landmark, address
   return (
-    <Form layout="vertical" onFinish={onFinish} initialValues={finalValues.layout}>
+    <Form layout="vertical" onFinish={onFinish} initialValues={finalValues.location}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <Form.Item
           name="city"

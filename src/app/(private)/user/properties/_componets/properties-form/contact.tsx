@@ -2,8 +2,8 @@ import React from "react";
 import { PropertiesFormStepProps } from ".";
 import { Button, Form, Input, message, Select } from "antd";
 import { UploadFilesToFirebaseAndReturnUrls } from "@/helpers/upload-media";
-import { AddProperty } from "@/actions/properties";
-import { useRouter } from "next/navigation";
+import { AddProperty, EditProperty } from "@/actions/properties";
+import { useRouter, useParams } from "next/navigation";
 
 function Contact({
   currentStep,
@@ -12,7 +12,9 @@ function Contact({
   setFinalValues,
   loading,
   setLoading,
+  isEdit = false,
 }: PropertiesFormStepProps) {
+  const { id }: any = useParams();
   const router = useRouter();
   const onFinish = async (values: any) => {
     try {
@@ -32,9 +34,15 @@ function Contact({
         images: tempFinalValues.media.images,
         userId: tempFinalValues.basic.userId,
       };
-
-      await AddProperty(valuesAsPerDb);
-      message.success("Property added successfully");
+      let response = null;
+      if (isEdit) {
+        valuesAsPerDb.id = id;
+        response = await EditProperty(valuesAsPerDb, id);
+      } else {
+        response = await AddProperty(valuesAsPerDb);
+      }
+      if (response.error) throw new Error(response.error);
+      message.success(response.message);
       router.push("/user/properties");
     } catch (error: any) {
       message.error(error.message);

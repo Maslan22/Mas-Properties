@@ -15,29 +15,37 @@ export interface PropertiesFormStepProps {
   setFinalValues: (finalValues: any) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  isEdit?: boolean;
 }
 
-function PropertiesForm() {
+function PropertiesForm({
+  initialValues = {},
+  isEdit = false,
+}: {
+  initialValues?: any;
+  isEdit?: boolean;
+}) {
   const [finalValues, setFinalValues] = useState({
-    basic: {},
-    location: {},
-    amenities: {},
+    basic: initialValues,
+    location: initialValues,
+    amenities: initialValues,
     media: {
       newlyUploadedFiles: [],
-      images: [],
+      images: initialValues.images || [],
     },
-    contact: {},
+    contact: initialValues,
   });
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const commonPropsForSteps: PropertiesFormStepProps = {
+  const commonPropsForSteps: any = {
     currentStep,
     setCurrentStep,
     finalValues,
     setFinalValues,
     loading,
     setLoading,
+    isEdit,
   };
 
   const steps = [
