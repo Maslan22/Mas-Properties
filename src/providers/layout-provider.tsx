@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { Button, Dropdown, message } from "antd";
 import { GetCurrentUserFromMongoDB } from "@/actions/user";
@@ -43,19 +43,25 @@ const adminMenu = [
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [menuToShow, setMenuToShow] = useState<any>(userMenu);
-  const [currentUserData = null, setCurrentUserData] = useState<User | null>(
-    null
-  );
+  const [currentUserData, setCurrentUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const pathname = usePathname();
   const isPublicRoute = ["/sign-in", "/sign-up"].includes(pathname);
+
   const getHeader = () => {
     if (isPublicRoute) return null;
+
+    let displayName = "";
+    if (currentUserData?.username) {
+      displayName = currentUserData.username;
+    } else {
+      displayName = currentUserData?.email || ""; // Fallback to empty string if email is also not available
+    }
+
     return (
       <div className="lg:px-20 px-5">
         <div className="bg-primary p-2 flex justify-between items-center rounded-b">
           <h1 className="text-2xl text-white font-bold">MAS Properties</h1>
-
           <div className="bg-white py-2 px-5 rounded-sm flex items-center gap-5">
             <Dropdown
               menu={{
@@ -67,7 +73,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                 })),
               }}
             >
-              <Button className="text-primary hover:text-primary" type="link">{currentUserData?.username}</Button>
+              <Button className="text-primary hover:text-primary" type="link">
+                {currentUserData?.username.trim() &&
+                currentUserData.username.trim().toLowerCase() !== "null"
+                  ? currentUserData.username.trim()
+                  : currentUserData?.email}
+              </Button>
             </Dropdown>
             <UserButton afterSignOutUrl="/sign-in" />
           </div>
@@ -75,9 +86,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       </div>
     );
   };
+
   const getContent = () => {
     if (isPublicRoute) return children;
-    // if (loading) return <Loader />;
     return (
       <div>
         <div className="py-5 lg:px-20 px-5">{children}</div>
@@ -92,6 +103,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       const response: any = await GetCurrentUserFromMongoDB();
       if (response.error) throw new Error(response.error.message);
       setCurrentUserData(response.data);
+      console.log(response.data);
       if (response.data.isAdmin) {
         setMenuToShow(adminMenu);
       }
