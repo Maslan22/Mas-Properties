@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import 'remixicon/fonts/remixicon.css';
 import ThemeProvider from "@/providers/theme-provider";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/layout-provider";
 
 const inter = Inter({ subsets: ["latin"] });
