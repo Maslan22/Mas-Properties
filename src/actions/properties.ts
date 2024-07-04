@@ -2,14 +2,16 @@
 
 import { GetCurrentUserFromMongoDB } from "./user";
 import prisma from "@/config/db";
+import { revalidatePath } from "next/cache";
 
 export const AddProperty = async (property: any) => {
   try {
     const user: any = await GetCurrentUserFromMongoDB();
-    property.user = user.data;
+    property.userId = user.data.id;
     await prisma.property.create({
       data: property,
     });
+    revalidatePath("/user/properties");
     return {
       data: property,
       message: "Property added successfully",

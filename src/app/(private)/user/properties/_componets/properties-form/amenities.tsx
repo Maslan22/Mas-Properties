@@ -1,7 +1,8 @@
 import React from "react";
 import { PropertiesFormStepProps } from ".";
-import { Button, Input, InputNumber, Select, Form } from "antd";
+import { Button, InputNumber, Select, Form } from "antd";
 import { facingTypes, parkingTypes, furnishingTypes } from "@/constants";
+
 function Amenities({
   currentStep,
   setCurrentStep,
@@ -13,7 +14,6 @@ function Amenities({
     setCurrentStep(currentStep + 1);
   };
 
-  //bedrooms, bathrooms, balconies, parking, furnishing, area, totalFloors, facing, age
   return (
     <Form
       layout="vertical"
@@ -26,21 +26,21 @@ function Amenities({
           label="Bedrooms"
           rules={[{ required: true, message: "Please input Bedrooms" }]}
         >
-          <InputNumber placeholder="Bedrooms" className="w-full"/>
+          <InputNumber placeholder="Bedrooms" className="w-full" />
         </Form.Item>
         <Form.Item
           name="bathrooms"
           label="Bathrooms"
           rules={[{ required: true, message: "Please input Bathrooms" }]}
         >
-          <InputNumber placeholder="Bathrooms" className="w-full"/>
+          <InputNumber placeholder="Bathrooms" className="w-full" />
         </Form.Item>
         <Form.Item
           name="balconies"
           label="Balconies"
           rules={[{ required: true, message: "Please input Balconies" }]}
         >
-          <InputNumber placeholder="Balconies" className="w-full"/>
+          <InputNumber placeholder="Balconies" className="w-full" />
         </Form.Item>
         <Form.Item
           name="parking"
@@ -61,28 +61,28 @@ function Amenities({
           label="Floors"
           rules={[{ required: true, message: "Please input Floors" }]}
         >
-          <InputNumber placeholder="Floors" className="w-full"/>
+          <InputNumber placeholder="Floors" className="w-full" />
         </Form.Item>
         <Form.Item
           name="area"
           label="Area"
           rules={[{ required: true, message: "Please input Area" }]}
         >
-          <InputNumber placeholder="Area" className="w-full"/>
+          <InputNumber placeholder="Area" className="w-full" />
         </Form.Item>
         <Form.Item
           name="facing"
           label="Facing"
           rules={[{ required: true, message: "Please input Facing" }]}
         >
-          <Select options={facingTypes} placeholder="Facing" className="w-full"/>
+          <Select options={facingTypes} placeholder="Facing" className="w-full" />
         </Form.Item>
         <Form.Item
           name="age"
           label="Age"
           rules={[{ required: true, message: "Please input Age" }]}
         >
-          <InputNumber placeholder="Age" className="w-full"/>
+          <InputNumber placeholder="Age" className="w-full" />
         </Form.Item>
       </div>
       <div className="flex justify-end gap-5 mt-7">

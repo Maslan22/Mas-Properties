@@ -30,32 +30,32 @@ model User {
 
 //property model
 model Property {
-  id                String   @id @default(cuid()) @map("_id")
-  userId            String
-  user              User     @relation(fields: [userId], references: [id])
-  name              String
-  description       String
-  type              String
-  status            String
-  price             Float
-  city              String
-  pincode           String
-  address           String
-  landmark          String
-  bedrooms          Int
-  bathrooms         Int
-  balconies         Int
-  furnishing        String
-  parking           String
-  floors            Int
-  area              Float
-  facing            String
-  age               Int
-  images            String[]
-  ownerName         String
-  ownerEmail        String
-  ownerPhone        String
-  showOwnwerContact Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id               String   @id @default(cuid()) @map("_id")
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  name             String
+  description      String
+  type             String
+  status           String
+  price            Float
+  city             String
+  pincode          Int
+  landmark         String
+  address          String
+  bedrooms         Int
+  bathrooms        Int
+  balconies        Int
+  parking          String
+  furnishing       String
+  floors           Int
+  area             Float
+  facing           String
+  age              Int
+  images           String[]
+  ownerName        String
+  ownerEmail       String
+  ownerPhone       String
+  showOwnerContact Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

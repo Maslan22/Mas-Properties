@@ -13,6 +13,8 @@ export interface PropertiesFormStepProps {
   setCurrentStep: (currentStep: number) => void;
   finalValues: any;
   setFinalValues: (finalValues: any) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 function PropertiesForm() {
@@ -27,12 +29,15 @@ function PropertiesForm() {
     contact: {},
   });
   const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const commonPropsForSteps: PropertiesFormStepProps = {
     currentStep,
     setCurrentStep,
     finalValues,
     setFinalValues,
+    loading,
+    setLoading,
   };
 
   const steps = [
