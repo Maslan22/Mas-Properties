@@ -51,13 +51,6 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const getHeader = () => {
     if (isPublicRoute) return null;
 
-    let displayName = "";
-    if (currentUserData?.username) {
-      displayName = currentUserData.username;
-    } else {
-      displayName = currentUserData?.email || ""; // Fallback to empty string if email is also not available
-    }
-
     return (
       <div className="lg:px-20 px-5">
         <div className="bg-primary p-2 flex justify-between items-center rounded-b">
@@ -89,12 +82,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
 
   const getContent = () => {
     if (isPublicRoute) return children;
-    return (
-      <div>
-        <div className="py-5 lg:px-20 px-5">{children}</div>
-        {loading && <Loader />}
+    if (loading) return (
+      <div className="flex justify-center items-start h-screen pt-20">
+        <Loader />
       </div>
     );
+    return <div className="py-5 lg:px-20 px-5">{children}</div>;
   };
 
   const getCurrentUser = async () => {

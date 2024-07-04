@@ -1,7 +1,9 @@
 import PageTitle from "@/componets/page-title";
-import React from "react";
+import React, { Suspense } from "react";
 import PropertiesTable from "./_componets/properties-table";
 import LinkButton from "@/componets/link-button";
+import Filters from "@/componets/filters";
+import Loader from "@/componets/loader";
 
 function Properties() {
   return (
@@ -13,8 +15,10 @@ function Properties() {
           path="/user/properties/create-property"
         />
       </div>
-
-      <PropertiesTable />
+      <Filters />
+      <Suspense fallback={<Loader />}>
+        <PropertiesTable />
+      </Suspense>
     </div>
   );
 }
