@@ -25,7 +25,13 @@ export const AddProperty = async (property: any) => {
 
 export const EditProperty = async (property: any, id: string) => {
   // Destructure the `id` and any other non-updatable fields out of the property object if present.
-  const { id: propertyId, createdAt, updatedAt, user, ...updatableFields } = property;
+  const {
+    id: propertyId,
+    createdAt,
+    updatedAt,
+    user,
+    ...updatableFields
+  } = property;
 
   try {
     await prisma.property.update({

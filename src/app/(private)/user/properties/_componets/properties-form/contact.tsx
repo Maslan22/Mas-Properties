@@ -57,7 +57,7 @@ function Contact({
       onFinish={onFinish}
       initialValues={finalValues.contact}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="lg:grid-cols-3 grid grid-cols-1  gap-5">
         <Form.Item
           name="ownerName"
           label="Owner Name"
