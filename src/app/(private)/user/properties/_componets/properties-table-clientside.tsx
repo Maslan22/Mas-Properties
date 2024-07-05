@@ -64,7 +64,14 @@ function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
             <Button size="small" onClick={() => onDelete(record.id)}>
               <i className="ri-delete-bin-line"></i>
             </Button>
-            <Button size="small">
+            <Button
+              size="small"
+              onClick={() =>
+                router.push(
+                  `/user/properties/create-property?cloneFrom=${record.id}`
+                )
+              }
+            >
               <i className="ri-file-copy-line"></i>
             </Button>
             <Button
