@@ -32,11 +32,11 @@ function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
       key: "status",
     },
     {
-      title: "Created At",
-      dataIndex: "createdAt",
-      //   key: "createdAt",
-      render(createdAt: Date) {
-        return dayjs(createdAt).format("DD MMM YYYY");
+      title: "Updated At",
+      dataIndex: "updatedAt",
+      //   key: "updatedAt",
+      render(updatedAt: Date) {
+        return dayjs(updatedAt).format("DD MMM YYYY");
       },
     },
     {

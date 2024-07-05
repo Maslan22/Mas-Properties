@@ -20,10 +20,16 @@ function Contact({
     try {
       setLoading(true);
       const tempFinalValues = { ...finalValues, contact: values };
+
+      //handle media upload
       const tempMedia = tempFinalValues.media;
-      tempMedia.images = await UploadFilesToFirebaseAndReturnUrls(
+      const newImagesUrls = await UploadFilesToFirebaseAndReturnUrls(
         tempMedia.newlyUploadedFiles
       );
+
+      tempMedia.images = [...tempMedia.images, ...newImagesUrls];
+
+
       tempFinalValues.media = tempMedia;
 
       const valuesAsPerDb = {
