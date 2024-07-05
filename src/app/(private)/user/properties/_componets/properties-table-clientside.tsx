@@ -1,11 +1,26 @@
 "use client";
+import { DeleteProperty } from "@/actions/properties";
 import { Property } from "@prisma/client";
-import { Button, Table } from "antd";
+import { Button, Table, message } from "antd";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
+  const [loading, setLoading] = React.useState(false);
+
+  const onDelete = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await DeleteProperty(id);
+      if (response.error) throw new Error(response.error);
+      message.success(response.message);
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const router = useRouter();
   const columns = [
     {
@@ -46,7 +61,7 @@ function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
       render(value: any, record: Property) {
         return (
           <div className="flex gap-5">
-            <Button size="small">
+            <Button size="small" onClick={() => onDelete(record.id)}>
               <i className="ri-delete-bin-line"></i>
             </Button>
             <Button size="small">
@@ -67,7 +82,12 @@ function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
   ];
   return (
     <div className="capitalize">
-      <Table dataSource={properties} columns={columns} />
+      <Table
+        dataSource={properties}
+        columns={columns}
+        loading={loading}
+        rowKey="id"
+      />
     </div>
   );
 }
