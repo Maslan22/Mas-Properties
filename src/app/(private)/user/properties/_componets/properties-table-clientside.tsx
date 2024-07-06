@@ -61,7 +61,7 @@ function ClientSidePropertiesTable({ properties }: { properties: Property[] }) {
       render(value: any, record: Property) {
         return (
           <div className="flex gap-5">
-            <Button size="small" onClick={() => onDelete(record.id)}>
+            <Button onClick={() => onDelete(record.id)}size="small" >
               <i className="ri-delete-bin-line"></i>
             </Button>
             <Button
